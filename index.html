@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saludos</title>
+</head>
+<style>
+    body {
+        background: linear-gradient(135deg, #FFD1DC, #FFB6C1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Comic Sans MS', cursive, sans-serif;
+        overflow: hidden;
+        position: relative;
+    }
+    /*.container {
+        position: relative;
+        text-align: center;
+    }*/
+    .saludo-box{
+        background: #FFF3F3;
+        padding: 20px 40px;
+        border-radius: 20px;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 2;
+    }
+    .sparkle-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .sparkle {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        fill: yellow;
+        opacity: 0;
+        animation: sparkle 5s ease-in-out forwards;
+    }
+    @keyframes sparkle {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+</style>
+<body>
+    <div class="sparkle-container"></div>
+    <div class="saludo-box">{{ saludo }}</div>
+
+    <audio id="magic-sound" src="/magico.mp3"></audio>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const sparkleContainer = document.querySelector(".sparkle-container");
+            const magicSound = document.getElementById("magic-sound");
+
+            function createSparkle() {
+                const sparkle = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                sparkle.setAttribute("class", "sparkle");
+                sparkle.setAttribute("viewBox", "0 0 24 24");
+                sparkle.innerHTML = '<path d="M12 2L14.09 8.26L20 9L14.5 13.27L16 19L12 15.5L8 19L9.5 13.27L4 9L9.91 8.26L12 2Z"/>';
+
+                let x = Math.random() * window.innerWidth;
+                let y = Math.random() * window.innerHeight;
+                sparkle.style.left = `${x}px`;
+                sparkle.style.top = `${y}px`;
+
+                sparkleContainer.appendChild(sparkle);
+
+                setTimeout(() => sparkle.remove(), 5000); // Quitar después de 5 segundos
+            }
+
+            // Generar brillos en diferentes lugares
+            for (let i = 0; i < 20; i++) {
+                setTimeout(createSparkle, Math.random() * 1000);
+            }
+            magicSound.play();//sonidito
+        });
+    </script>
+</body>
+</html>
